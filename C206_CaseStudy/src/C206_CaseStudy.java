@@ -1,7 +1,151 @@
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class C206_CaseStudy {
+	
+	private static final int OPTION_QUIT = 7;
+	
+	public static void main(String[] args) {
+		// Main method and other code here...
+		String id = Helper.readString("Enter your ID: ");
+		String password = Helper.readString("Enter your Password: ");
+		
+		User u1 = new User("A100", "C206", "Larry Loh", 12345678, "admin");
+		User u2 = new User("A200", "C206", "Mary Yeo", 87654321, "admin");
+		User u3 = new User("C100", "C206", "Sam Lee", 88001122, "customer");
+		User u4 = new User("C200", "C206", "Frankie Cha", 99887766, "customer");
+		
+		Rate r1 = new Rate("krw", 960);
+		Rate r2 = new Rate("myr", 3.45);
+		
+		ArrayList<User> userList = new ArrayList<User>();
+		ArrayList<Rate> rateList = new ArrayList<Rate>();
+		
+		userList.add(u1);
+		userList.add(u2);
+		userList.add(u3);
+		userList.add(u4);
+		
+		String output = " ";
+		String role = " ";
+		String name = " "; 
+		for (User i : userList) {
+			if(id.matches(i.getUserID()) && password.matches(i.getPassword())) {
+				role =  i.getRole();
+				output = " ";
+				if(role == "admin") {
+					name = i.getFullName();
+					break;
+				} else if (role == "customer") {
+					name = i.getFullName();
+					break;
+				}
+			} else {
+				output += "Invalid Username or Password";
+			}
+		}
+		System.out.println(output);
+		
+		if (role == "admin") {
+			System.out.println("Hello " + name + "!");
+			int option = 0;
+			
+			while (option != 5) {
+				
+				C206_CaseStudy.adminmenu();
+				option = Helper.readInt("Enter an option > ");
+				
+				if (option == 1) {
+					
+				} else if (option == 2) {
+					
+				} else if (option == 3) {
+					
+				} else if(option == 4) {
+					
+				} else if(option == 5) {
+					System.out.println("Goodbye!");
+				} else {
+					System.out.println("Invalid option!");
+				}
+			}
+		}
+		
+		if (role == "customer") {
+			System.out.println("Hello " + name + "!");
+			int option = 0;
+			
+			while (option != 6) {
+				
+				C206_CaseStudy.customermenu();
+				option = Helper.readInt("Enter an option > ");
+				
+				if (option == 1) {
+					
+				} else if (option == 2) {
+					createTransaction(); // Don Lim
+				} else if (option == 3) {
+					
+				} else if(option == 4) {
+					
+				} else if (option == 5) {
+					
+				} else if (option == 6) {
+					System.out.println("Goodbye!");
+				} else {
+					System.out.println("Invalid option!");
+				}
+			}
+		}
+		
+	}
+	
+	public static void customermenu() {
+		C206_CaseStudy.setHeader("Money Exchange Management System");
+		System.out.println("1. View Currency");
+		System.out.println("2. Transaction");
+		System.out.println("3. Maintain Account");
+		System.out.println("4. View Rates");
+		System.out.println("5. Create Feedbacks");
+		System.out.println("6. Quit");
+		Helper.line(80, "-");
+	}
+	
+	public static void adminmenu() {
+		C206_CaseStudy.setHeader("Money Exchange Management System");
+		System.out.println("1. New User");
+		System.out.println("2. Currency");
+		System.out.println("3. Rates");
+		System.out.println("4. View Feedbacks");
+		System.out.println("5. Quit");
+		Helper.line(80, "-");
+	}
+	
+	public static void setHeader(String header) {
+		Helper.line(80, "-");
+		System.out.println(header);
+		Helper.line(80, "-");
+	}
+	
+	public static void createTransaction() {
+		String accountID = Helper.readString("Enter Account ID: ");
+		Date date = (Date) Helper.readDate("Date of Transaction: ");
+		int amount = Helper.readInt("Enter Amount to Exchange: ");
+		String code = Helper.readString("Enter Country code to convert: ");
+		double amountGiven = 0.0;
+		
+		for (Rate i : rateList) {
+			if(code.matches(i.getCurrencyCode())) {
+				amountGiven = i.getExchangeRate() * amount;
+				break;
+			}
+		}
+		
+		//Transactions newTransaction = new Transactions(amount, date, amount, amount, code, amount);
+		
+	}
 
 	// Static list to store all rates
 	private static List<Rate> rateList = new ArrayList<>();
@@ -31,9 +175,6 @@ public class C206_CaseStudy {
 		return false; // Rate with given currencyCode not found
 	}
 
-	public static void main(String[] args) {
-		// Main method and other code here...
-	}
 }
 
 	
