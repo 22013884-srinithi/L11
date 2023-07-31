@@ -17,8 +17,11 @@ public class C206_CaseStudy {
 		User u3 = new User("C100", "C206", "Sam Lee", 88001122, "customer");
 		User u4 = new User("C200", "C206", "Frankie Cha", 99887766, "customer");
 		
-		Rate r1 = new Rate("krw", 960);
-		Rate r2 = new Rate("myr", 3.45);
+		Rate r1 = new Rate("KRW", 960);
+		Rate r2 = new Rate("MYR", 3.45);
+		Rate r3 = new Rate ("JPY", 106.74);
+		Rate r4 = new Rate ("EUR", 0.68);
+		
 		
 		ArrayList<User> userList = new ArrayList<User>();
 		ArrayList<Rate> rateList = new ArrayList<Rate>();
@@ -27,6 +30,12 @@ public class C206_CaseStudy {
 		userList.add(u2);
 		userList.add(u3);
 		userList.add(u4);
+		
+		rateList.add(r1); //Khalis
+		rateList.add(r2); //Khalis
+		rateList.add(r3); //Khalis
+		rateList.add(r4); //Khalis
+		
 		
 		String output = " ";
 		String role = " ";
@@ -89,7 +98,7 @@ public class C206_CaseStudy {
 				} else if (option == 3) {
 					
 				} else if(option == 4) {
-					
+					viewRates(rateList); // Khalis
 				} else if (option == 5) {
 					
 				} else if (option == 6) {
@@ -145,6 +154,18 @@ public class C206_CaseStudy {
 		
 		//Transactions newTransaction = new Transactions(amount, date, amount, amount, code, amount);
 		
+	}
+
+	// View Rates
+	public static void viewRates(ArrayList<Rate> rateList) { // Khalis
+	
+	System.out.println(String.format("%-15s %-15s", "Currency Code", "Exchange Rate"));
+	Helper.line(30, "=");
+	for (Rate i: rateList) {
+		System.out.println(String.format("%-15s %-15.2f", i.getCurrencyCode(), i.getExchangeRate()));
+			
+			
+		}
 	}
 
 	// Static list to store all rates

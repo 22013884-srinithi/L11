@@ -22,4 +22,10 @@ public class Rate {
     public String toString() {
         return "Currency Code: " + currencyCode + ", Exchange Rate: " + exchangeRate;
     }
+
+	public void setExchangeRate(double exchangeRate) { // Khalis
+		this.exchangeRate = exchangeRate;
+	}
+	
+	
 }
