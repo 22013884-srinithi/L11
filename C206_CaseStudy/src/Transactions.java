@@ -1,29 +1,30 @@
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class Transactions {
 	
-	private int transactionID;
-	private Date transactionDate;
+	private String transactionID;
+	private LocalDate transactionDate;
 	private int amountExchanged;
-	private int customerID;
+	private String customerID;
 	private String currencyCode;
 	private double exchangeRate;
+	private double amountGiven;
 	
-	public Transactions(int transactionID, Date transactionDate, int amountExchanged, int customerID, String currencyCode, double exchangeRate) {
+	public Transactions(String transactionID, LocalDate transactionDate, int amountExchanged, String customerID, String currencyCode, double exchangeRate, double amountGiven) {
 		this.transactionID = transactionID;
 		this.transactionDate = transactionDate;
 		this.amountExchanged = amountExchanged;
 		this.customerID = customerID;
 		this.currencyCode = currencyCode;
 		this.exchangeRate = exchangeRate;
+		this.amountGiven = amountGiven;
 	}
 
-	public int getTransactionID() {
+	public String getTransactionID() {
 		return transactionID;
 	}
 
-	public Date getTransactionDate() {
+	public LocalDate getTransactionDate() {
 		return transactionDate;
 	}
 	
@@ -31,8 +32,12 @@ public class Transactions {
 		return amountExchanged;
 	}
 
-	public int getCustomerID() {
+	public String getCustomerID() {
 		return customerID;
+	}
+
+	public double getAmountGiven() {
+		return amountGiven;
 	}
 
 	public String getCurrencyCode() {

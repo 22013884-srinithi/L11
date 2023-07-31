@@ -1,11 +1,13 @@
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class C206_CaseStudy {
 	
-	private static final int OPTION_QUIT = 7;
 	
 	public static void main(String[] args) {
 		// Main method and other code here...
@@ -18,13 +20,23 @@ public class C206_CaseStudy {
 		User u4 = new User("C200", "C206", "Frankie Cha", 99887766, "customer");
 		
 		Rate r1 = new Rate("KRW", 960);
-		Rate r2 = new Rate("MYR", 3.45);
+		Rate r2 = new Rate("MYR", 3.42);
 		Rate r3 = new Rate ("JPY", 106.74);
 		Rate r4 = new Rate ("EUR", 0.68);
+		
+		DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String date = "01/02/2023";
+		LocalDate dateLD = LocalDate.parse(date, formatter1);
+
+		Transactions t1 = new Transactions("C100KRW1922", dateLD, 2, "C100", "KRW", 960, 1922.2);
+		Transactions t2 = new Transactions("C100MYR342", dateLD, 100, "C100", "MYR", 3.42, 342);
+		Transactions t3 = new Transactions("C100KRW1922", dateLD, 2, "C100", "KRW", 960, 1922.2);
+		Transactions t4 = new Transactions("C100KRW1922", dateLD, 2, "C100", "KRW", 960, 1922.2);
 		
 		
 		ArrayList<User> userList = new ArrayList<User>();
 		ArrayList<Rate> rateList = new ArrayList<Rate>();
+		ArrayList<Transactions> transactionList = new ArrayList<Transactions>();
 		
 		userList.add(u1);
 		userList.add(u2);
@@ -35,6 +47,11 @@ public class C206_CaseStudy {
 		rateList.add(r2); //Khalis
 		rateList.add(r3); //Khalis
 		rateList.add(r4); //Khalis
+		
+		transactionList.add(t1);
+		transactionList.add(t2);
+		transactionList.add(t3);
+		transactionList.add(t4);
 		
 		
 		String output = " ";
@@ -94,7 +111,7 @@ public class C206_CaseStudy {
 				if (option == 1) {
 					
 				} else if (option == 2) {
-					createTransaction(); // Don Lim
+					createTransaction(rateList, transactionList); // Don Lim
 				} else if (option == 3) {
 					
 				} else if(option == 4) {
@@ -138,21 +155,39 @@ public class C206_CaseStudy {
 		Helper.line(80, "-");
 	}
 	
-	public static void createTransaction() {
+	public static void createTransaction(ArrayList<Rate> rateList, ArrayList<Transactions> transactionList) {
 		String accountID = Helper.readString("Enter Account ID: ");
-		Date date = (Date) Helper.readDate("Date of Transaction: ");
+		String date = Helper.readString("Date of Transaction: ");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateLD = LocalDate.parse(date, formatter);
 		int amount = Helper.readInt("Enter Amount to Exchange: ");
-		String code = Helper.readString("Enter Country code to convert: ");
+		String code = Helper.readString("Enter Country code to convert: ").toUpperCase();
 		double amountGiven = 0.0;
+		double rate = 0.0;
 		
 		for (Rate i : rateList) {
 			if(code.matches(i.getCurrencyCode())) {
 				amountGiven = i.getExchangeRate() * amount;
+				rate = i.getExchangeRate();
 				break;
 			}
 		}
+		String toString = Double.toString(amountGiven);
+		String transactionID = accountID + code + toString;
+		Transactions newTransaction = new Transactions(transactionID, dateLD, amount, accountID, code, rate, amountGiven);
+		transactionList.add(newTransaction);
 		
-		//Transactions newTransaction = new Transactions(amount, date, amount, amount, code, amount);
+		String output = "";
+		for (Transactions i: transactionList) {
+			if (transactionID.matches(i.getTransactionID())) {
+				output = "New Transaction Successfully Created!";
+				break;
+			} else {
+				output = "Transaction Declined!";
+			}
+		}
+		System.out.println(output);
+		
 		
 	}
 
